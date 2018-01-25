@@ -1,4 +1,4 @@
-/*! Canvallax, v1.2.1 (built 2015-11-13) https://github.com/shshaw/Canvallax.js @preserve */
+/*! Canvallax, v1.2.1 (built 2018-01-25) https://github.com/shshaw/Canvallax.js @preserve */
 (function(){
 
   var win = window,
@@ -120,7 +120,6 @@
     if ( options && options.elements ) { C.addElements(options.elements); }
 
     C.damping = ( !C.damping || C.damping < 1 ? 1 : C.damping );
-
     C.render();
 
     return C;
@@ -136,6 +135,8 @@
 
     _x: 0,
     _y: 0,
+    __x: 0, 
+    __y: 0,
 
     add: function(el){
 
@@ -171,7 +172,6 @@
       if ( C.animating ) { C.animating = requestAnimationFrame(C.render.bind(C)); }
 
       if ( C.tracking ) {
-
         if ( C.tracking === 'scroll' ) {
 
           if ( !watchingScroll ) {
@@ -204,12 +204,23 @@
             C.y = -winPointerY + offsetTop;
           }
 
-        }
+        } else if ( C.tracking == 'manual' ) {
+
+          if(C.__x == C.x && C.__y == C.y){
+            return;
+          }
+          C.__x = C.x;
+          C.__y = C.y;
+      }
+      console.log("hu?")
+
 
         C.x = ( inBounds && (C.trackingInvert === true || C.trackingInvert === 'invertx') ? -C.x : C.x );
         C.y = ( inBounds && (C.trackingInvert === true || C.trackingInvert === 'inverty') ? -C.y : C.y );
 
-      }
+      } 
+
+      console.log("nope?")
 
       C._x += ( -C.x - C._x ) / C.damping;
       C._y += ( -C.y - C._y ) / C.damping;
