@@ -212,15 +212,11 @@
           C.__x = C.x;
           C.__y = C.y;
       }
-      console.log("hu?")
-
 
         C.x = ( inBounds && (C.trackingInvert === true || C.trackingInvert === 'invertx') ? -C.x : C.x );
         C.y = ( inBounds && (C.trackingInvert === true || C.trackingInvert === 'inverty') ? -C.y : C.y );
 
       } 
-
-      console.log("nope?")
 
       C._x += ( -C.x - C._x ) / C.damping;
       C._y += ( -C.y - C._y ) / C.damping;
